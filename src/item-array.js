@@ -24,16 +24,14 @@ export class ItemArray {
     }
 
     // increases the property 'clicks' in the item object
-    increaseClicksInObject(clickedItemId) { // randomItemId, clickedItemId
-        const itemObject = this.getItemById(clickedItemId);
-        const increasedClicksObject = itemObject.clicks + 1; 
-        return increasedClicksObject; // returns object with the clicks increased
+    increaseClicksInObject(clickedItemObject) { // randomItemId, clickedItemId
+        clickedItemObject++;
+        return clickedItemObject;
     }
 
     // increases the property 'timesShown' on the item object
-    increaseTimesShownInObject(randomItemId) {
-        const itemObject = this.getItemById(randomItemId);
-        const increasedTimesShownObject = itemObject.timesShown + 1; 
-        return increasedTimesShownObject; 
+    increaseTimesShownInObject(shownItem) { 
+        shownItem++; 
+        return shownItem; 
     }
 }

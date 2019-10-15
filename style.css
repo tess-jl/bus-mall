@@ -1,0 +1,19 @@
+body {
+    display: flex; 
+    justify-content: center;
+    text-align: center;
+}
+
+/* .container {
+    align-content: center; 
+} */
+
+[type=radio] {
+    display: none;
+}
+
+.item-image {
+    border: 5px solid transparent;
+    border-radius: 0%;
+    height: 100px;
+}

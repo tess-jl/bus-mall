@@ -8,27 +8,31 @@ const items = new ItemArray(productData); // storing an array object in items
 // console.log(items.getItems()); to access the array
 // console.log(items, 'first item in array'); shows me that items is an array object with the key/value pair items:Array(18)
 
-let itemShown;
+// let itemShown;
 
 let numberOfTrials = 0;
 let numberOfClicks = 0; 
-let numberOfTimesShown = 0; 
+ 
 
 
-// //need to iterate over radio tags and add the same event listener to each
-// itemRadioTags.forEach((radioTag) => {
-//     radioTag.addEventListener('click', (event) => {
-//         if (event.target.value === itemShown.id) {
-//             numberOfClicks++;
-//             numberOfTimesShown++;
-//             items.increaseClick(itemShown.id); // do we need this line? 
-//             items.increaseTimesShown(itemShown.id); // do we need this line? 
-//         }
-//     });
-// });
+//need to iterate over radio tags and add the same event listener to each
+itemRadioTags.forEach((radioTag) => {
+    // let itemShown; // initialize object itemShown
+    console.log(radioTag);
+
+    radioTag.addEventListener('click', (event) => {
+        console.log(radioTag, 'in event listener');
+        
+        if (event.target.value === radioTag.id) {
+            items.increaseClicksInObject(radioTag); // returns an object with the number of clicks increased by 1
+            console.log(radioTag);
+        }
+    });
+});
 
 
-const initializeNewItemButtons = () => {
+const initializeNewTrial = () => {
+    numberOfTrials++; 
 
     //get the three random item objects from the items array
     const randomItem1 = items.getRandomItem();
@@ -44,7 +48,6 @@ const initializeNewItemButtons = () => {
 
     //show three random item images
     itemImageTags.forEach((imageTag, index) => { 
-        console.log(itemImageTags);
         if (index === 0) {
             imageTag.src = randomItem1.image;
         } else if (index === 1) {
@@ -57,13 +60,15 @@ const initializeNewItemButtons = () => {
     itemRadioTags.forEach((radioTag, index) => {
         if (index === 0) {
             radioTag.value = randomItem1.id;
+            items.increaseTimesShownInObject(randomItem1); // returns object with updated timesShown property 
         } else if (index === 1) {
             radioTag.value = randomItem2.id;
+            items.increaseTimesShownInObject(randomItem2);
         } else if (index === 2) {
             radioTag.value = randomItem3.id;
+            items.increaseTimesShownInObject(randomItem3);
         }
-    });
-    
+    });  
 
 }; 
 
@@ -72,9 +77,9 @@ const initializeNewItemButtons = () => {
 //     //display list of products with times viewed and votes received (don't display products not viewed)
 // }
 
-document.querySelector('button').addEventListener('click', initializeNewItemButtons);
+document.querySelector('button').addEventListener('click', initializeNewTrial);
 
-initializeNewItemButtons(); 
+initializeNewTrial(); 
 
 
 
