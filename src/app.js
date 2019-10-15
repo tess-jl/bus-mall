@@ -45,7 +45,7 @@ if (numberOfTrials > 25) {
     //display list of products with times viewed and votes received (don't display products not viewed)
 }
 
-document.querySelector('continue-button').addEventListener('click', initializeNewItemButtons);
+document.querySelector('button').addEventListener('click', initializeNewItemButtons);
 
 initializeNewItemButtons(); 
 
