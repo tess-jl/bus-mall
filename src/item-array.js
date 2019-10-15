@@ -28,7 +28,7 @@ export class ItemArray {
     }
 
     //getItemAtRandom generates a random item image by generating a random number and using that number to find an item at that index in the array.
-    getItemsAtRandom() {
+    getRandomItem() {
         const randomItemIndex = Math.floor(Math.random() * this.items.length);
         return this.items[randomItemIndex];
     }
