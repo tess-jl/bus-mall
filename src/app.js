@@ -1,8 +1,8 @@
 import { productData } from './api.js';
 import { ItemArray } from './item-array.js';
 
-const itemImageTags = document.querySelectorAll('img');
-const itemRadioTags = document.querySelectorAll('input');
+const nodeListOfImageTags = document.querySelectorAll('img');
+const nodeListOfRadioTags = document.querySelectorAll('input');
 
 const items = new ItemArray(productData); // storing an array object in items 
 // console.log(items.getItems()); to access the array
@@ -16,7 +16,7 @@ let numberOfClicks = 0;
 
 
 //need to iterate over radio tags and add the same event listener to each
-itemRadioTags.forEach((radioTag) => {
+nodeListOfRadioTags.forEach((radioTag) => {
     // let itemShown; // initialize object itemShown
     console.log(radioTag);
 
@@ -47,7 +47,7 @@ const initializeNewTrial = () => {
     }
 
     //show three random item images
-    itemImageTags.forEach((imageTag, index) => { 
+    nodeListOfImageTags.forEach((imageTag, index) => { 
         if (index === 0) {
             imageTag.src = randomItem1.image;
         } else if (index === 1) {
@@ -57,16 +57,16 @@ const initializeNewTrial = () => {
         }
     });
     // render each random item at the three radio elements 
-    itemRadioTags.forEach((radioTag, index) => {
+    nodeListOfRadioTags.forEach((radioTag, index) => {
         if (index === 0) {
             radioTag.value = randomItem1.id;
-            items.increaseTimesShownInObject(randomItem1); // returns object with updated timesShown property 
+            // items.increaseTimesShownInObject(randomItem1); // returns object with updated timesShown property 
         } else if (index === 1) {
             radioTag.value = randomItem2.id;
-            items.increaseTimesShownInObject(randomItem2);
+            // items.increaseTimesShownInObject(randomItem2);
         } else if (index === 2) {
             radioTag.value = randomItem3.id;
-            items.increaseTimesShownInObject(randomItem3);
+            // items.increaseTimesShownInObject(randomItem3);
         }
     });  
 
