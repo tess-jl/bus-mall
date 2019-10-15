@@ -23,15 +23,16 @@ export class ItemArray {
         return this.items[randomItemIndex];
     }
 
-    // increases the property 'clicks' in the item object
-    increaseClicksInObject(clickedItemObject) { // randomItemId, clickedItemId
-        clickedItemObject++;
-        return clickedItemObject;
+
+    removeById(itemId) {
+        const list = this.list; 
+
+        list.forEach((item, i) => {
+            if (item.id === itemId) {
+                list.splice(1, i);
+                return;
+            }
+        });
     }
 
-    // increases the property 'timesShown' on the item object
-    increaseTimesShownInObject(shownItem) { 
-        shownItem++; 
-        return shownItem; 
-    }
 }
