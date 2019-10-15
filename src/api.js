@@ -2,42 +2,42 @@ export const productData = [
     {
         id: 'bag',
         name: 'Star Wars Themed Suitcase',
-        img: '../assets/bag.jpg',
+        image: '../assets/bag.jpg',
         clicks: 0,
         timesShown: 0
     },
     {
         id: 'banana',
         name: 'Banana Slicer',
-        img: '../assets/banana.jpg',
+        image: '../assets/banana.jpg',
         clicks: 0,
         timesShown: 0
     },
     {
         id: 'bathroom',
         name: 'iPad Toilet Paper Roll Dispenser',
-        img: '../assets/bathroom.jpg',
+        image: '../assets/bathroom.jpg',
         clicks: 0,
         timesShown: 0
     },
     {
         id: 'boots',
         name: 'Exposed Toe Rainboots',
-        img: '../assets/boots.jpg',
+        image: '../assets/boots.jpg',
         clicks: 0,
         timesShown: 0
     },
     {
         id: 'breakfast',
         name: 'The All-in-One Breakfast Maker',
-        img: '../assets/breakfast.jpg',
+        image: '../assets/breakfast.jpg',
         clicks: 0,
         timesShown: 0
     },
     {
         id: 'bubblegum',
         name: 'Meatball Bubble Gum',
-        img: '../assets/bubblegum.jpg',
+        image: '../assets/bubblegum.jpg',
         clicks: 0,
         timesShown: 0
     },
@@ -93,7 +93,7 @@ export const productData = [
     {
         id: 'sweep',
         name: 'Baby Sweeping Onesie',
-        image: '../assets/sweep.jpg',
+        image: '../assets/sweep.png',
         clicks: 0,
         timesShown: 0
     },
@@ -107,7 +107,7 @@ export const productData = [
     {
         id: 'usb',
         name: 'Tentacle USB',
-        image: '../assets/usb.jpg',
+        image: '../assets/usb.gif',
         clicks: 0,
         timesShown: 0
     },

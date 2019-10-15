@@ -7,23 +7,13 @@ export class ItemArray {
         return this.items;
     }
 
-    // gets the spefiic image out of the ItemArray by id; takes id and returns image
-    getImageById(someId) { // renaming
-        this.items.forEach(item => {
-            if (someId === item.id) {
-                return this.items.image(); // ??
-            }
-        });
-    }
-
-    getItemById(someId) { // do we need this? 
+    getItemById(randomItemId) { // used after item is randomly generated 
         let itemMatch;
         this.items.forEach(item => {
-            if (someId === item.id) {
+            if (randomItemId === item.id) {
                 itemMatch = item;
             }
         });
-    
         return itemMatch; // returns objects
     }
 
@@ -34,16 +24,16 @@ export class ItemArray {
     }
 
     // increases the property 'clicks' in the item object
-    increaseClick(someId) {
-        const itemObject = this.getItemById(someId);
-        const increasedClicks = itemObject.clicks + 1; 
-        return increasedClicks; 
+    increaseClicksInObject(clickedItemId) { // randomItemId, clickedItemId
+        const itemObject = this.getItemById(clickedItemId);
+        const increasedClicksObject = itemObject.clicks + 1; 
+        return increasedClicksObject; // returns object with the clicks increased
     }
 
     // increases the property 'timesShown' on the item object
-    increaseTimesShown(someId) {
-        const itemObject = this.getItemById(someId);
-        const increasedTimesShown = itemObject.timesShown + 1; 
-        return increasedTimesShown; 
+    increaseTimesShownInObject(randomItemId) {
+        const itemObject = this.getItemById(randomItemId);
+        const increasedTimesShownObject = itemObject.timesShown + 1; 
+        return increasedTimesShownObject; 
     }
 }
