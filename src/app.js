@@ -4,7 +4,7 @@ import { findById } from './utils.js';
 
 const nodeListOfImageTags = document.querySelectorAll('img');
 const nodeListOfRadioTags = document.querySelectorAll('input[name=item]');
-const itemDisplays = document.querySelectorAll('.item');
+// const itemDisplays = document.querySelectorAll('.item');
 const nextContainer = document.getElementById('next-container');
 const nextButton = document.getElementById('next-button');
 const trialSection = document.getElementById('trial-section');
@@ -102,11 +102,11 @@ function displayTrialItems() {
 //     console.log(trialDataTimesShownArray, 'times shown array at end of display trial items');
 }
 
-function populateItemsJustShown(itemId) {
-    //POPULATE itemsJustShownArray?
-    const nextTrialsPreviouslyShownItem = { id: itemId };
-    itemsJustShown.push(nextTrialsPreviouslyShownItem);
-}
+// function populateItemsJustShown(itemId) {
+//     //POPULATE itemsJustShownArray?
+//     const nextTrialsPreviouslyShownItem = { id: itemId };
+//     itemsJustShown.push(nextTrialsPreviouslyShownItem);
+// }
 
 
 function trackNumberOfTimesShown(itemId) {
