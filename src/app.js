@@ -3,8 +3,10 @@ import { ItemArray } from './item-array.js';
 import { findById } from './utils.js';
 
 const nodeListOfImageTags = document.querySelectorAll('img');
-const nodeListOfRadioTags = document.querySelectorAll('input');
+const nodeListOfRadioTags = document.querySelectorAll('input[name=item]');
 const itemDisplays = document.querySelectorAll('.item');
+const nextContainer = document.getElementById('next-container');
+const nextButton = document.getElementById('next-button');
 
 const masterItemsArray = new ItemArray(productData); // storing an array object in items 
 // console.log(items.getItems()); to access the array
@@ -12,7 +14,7 @@ const masterItemsArray = new ItemArray(productData); // storing an array object 
 
 let recentlyShownItems = null; 
 
-
+let live = true; 
 let numberOfTrials = 0;
 
 let trialDataClicksArray = []; 
@@ -46,6 +48,7 @@ function displayTrialItems() {
     trackNumberOfTimesShown(itemToDisplay1.id);
     trackNumberOfTimesShown(itemToDisplay2.id);
     trackNumberOfTimesShown(itemToDisplay3.id);
+    // console.log(trialDataTimesShownArray, 'times shown array'); // working
 
     //show three random item images
     nodeListOfImageTags.forEach((imageTag, index) => { 
@@ -67,32 +70,6 @@ function displayTrialItems() {
             radioTag.value = itemToDisplay3.id;
         }
     });  
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function trackNumberOfClicks(itemId) {
-    const found = findById(trialDataClicksArray, itemId);
-    if (found) {
-        found.clicks++;
-        return; // breaks out of jail b/c it's iterated now
-    }
-    // if not already in array then create a new object and push it 
-    const newTrialDataObject = { id: itemId, clicks: 1 };
-    trialDataClicksArray.push(newTrialDataObject);
 }
 
 function trackNumberOfTimesShown(itemId) {
@@ -106,29 +83,49 @@ function trackNumberOfTimesShown(itemId) {
     trialDataTimesShownArray.push(newTrialDataObject);
 }
 
-//GOAL: update number of trials and number of clicks 
-// function trackTrialDataForArray(itemId) {   
-//     trackNumberOfTimesShown();
-//     trackNumberOfClicks();
-// }
+const handleUserChoice = (event) => {
+    if (!live) return;
 
-//need to iterate over radio tags and add the same event listener to each
-// nodeListOfRadioTags.forEach((radioTag) => {
+    numberOfTrials++;
+    const radioElement = event.target.value;
 
-//     numberOfTrials = 1;
-//     // let itemShown; // initialize object itemShown
-//     console.log(radioTag, 'radio tag');
+    //track number of clicks if the event listener on the radio tag has an event (i.e. user clicks)
+    trackNumberOfClicks(radioElement.id);
 
-//     radioTag.addEventListener('click', (event) => {
-//         console.log(radioTag, 'in event listener');
-        
-//         if (event.target.value === radioTag.id) {
-//             numberOfClicks++;
-//             trialDataArray.push()
-//             console.log(numberOfClicks);
-//         }
-//     });
-// });
+    //show next button
+    nextContainer.classList.remove('hidden');
+    live = false; 
+};
+
+function trackNumberOfClicks(itemId) {
+    const found = findById(trialDataClicksArray, itemId);
+    if (found) {
+        found.clicks++;
+        return; // breaks out of jail b/c it's iterated now
+    }
+    // if not already in array then create a new object and push it 
+    const newTrialDataObject = { id: itemId, clicks: 1 };
+    trialDataClicksArray.push(newTrialDataObject);
+}
+
+
+//need to iterate over radio inputs and add the same event listener to each
+nodeListOfRadioTags.forEach((radioInput) => {
+    radioInput.addEventListener('click', handleUserChoice); 
+});
+
+
+nextButton.addEventListener('click', () =>{
+    if (numberOfTrials === 25) {
+        displayFinalResults();
+        return; 
+    }
+
+    live = true; 
+    displayTrialItems();
+});
+
+// const displayFinalResults()
 
 
 
