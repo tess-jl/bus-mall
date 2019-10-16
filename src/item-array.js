@@ -7,17 +7,17 @@ export class ItemArray {
         return this.items;
     }
 
-    getItemById(randomItemId) { // used after item is randomly generated 
+    getItemById(randomItemId) { 
         let itemMatch;
         this.items.forEach(item => {
             if (randomItemId === item.id) {
                 itemMatch = item;
             }
         });
-        return itemMatch; // returns objects
+        return itemMatch;
     }
 
-    //getItemAtRandom generates a random item image by generating a random number and using that number to find an item at that index in the array.
+
     getRandomItem() {
         const randomItemIndex = Math.floor(Math.random() * this.items.length);
         return this.items[randomItemIndex];
