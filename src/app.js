@@ -156,7 +156,7 @@ nodeListOfRadioTags.forEach((radioInput) => {
 nextButton.addEventListener('click', () =>{
     console.log('in next event handler');
 
-    if (numberOfTrials === 3) {
+    if (numberOfTrials === 25) {
         displayFinalResults();
         return; 
     }
@@ -175,18 +175,23 @@ function displayFinalResults() {
     //tell user the numbe of trials
     trialCount.textContent = numberOfTrials; 
 
-    console.log(trialDataTimesShownArray, 'times shown array');
-    let itemShown = [];
+
+    let itemsShown = [];
+    
 
     trialDataTimesShownArray.forEach(object => {
-        itemShown.push(object.id);
-        console.log(itemShown, 'item shown');
-        itemData.textContent = itemShown; // only showing the last thing that was shown 
+        itemsShown.push(object.id);
+        console.log(itemsShown, 'item shown');
     });
+    const result = itemsShown.toString();
+    const stringResult = result.split(',');
+    itemData.textContent = stringResult; // only showing the last thing that was shown 
+    console.log(itemsShown, 'item shown after');
 
     // set up parameters for graphs
     // const data = [trialDataClicksArray.clicks];
 
 }
+
 
 
