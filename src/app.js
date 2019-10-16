@@ -7,6 +7,9 @@ const nodeListOfRadioTags = document.querySelectorAll('input[name=item]');
 const itemDisplays = document.querySelectorAll('.item');
 const nextContainer = document.getElementById('next-container');
 const nextButton = document.getElementById('next-button');
+const trialSection = document.getElementById('trial-section');
+const resultsSection = document.getElementById('results-section');
+const trialCount = document.getElementById('trial-count');
 
 const masterItemsArray = new ItemArray(productData); // storing an array object in items 
 // console.log(items.getItems()); to access the array
@@ -71,6 +74,7 @@ function displayTrialItems() {
         }
     });  
 }
+console.log(trialDataTimesShownArray, 'times shown array');
 
 function trackNumberOfTimesShown(itemId) {
     const shownBefore = findById(trialDataTimesShownArray, itemId);
@@ -84,9 +88,11 @@ function trackNumberOfTimesShown(itemId) {
 }
 
 const handleUserChoice = (event) => {
+    console.log('in handle user choice fcn');
     if (!live) return;
 
     numberOfTrials++;
+
     const radioElement = event.target.value;
 
     //track number of clicks if the event listener on the radio tag has an event (i.e. user clicks)
@@ -116,29 +122,70 @@ nodeListOfRadioTags.forEach((radioInput) => {
 
 
 nextButton.addEventListener('click', () =>{
+    console.log('in next event handler');
     if (numberOfTrials === 25) {
         displayFinalResults();
         return; 
     }
-
     live = true; 
     displayTrialItems();
 });
 
-// const displayFinalResults()
+console.log(trialDataClicksArray, 'trial data clicks array');
+
+
+function displayFinalResults() {
+    //hide trial and show result
+    trialSection.classList.add('hidden');
+    resultsSection.classList.remove('hidden');
+
+    //tell user the numbe of trials
+    trialCount.textContent = numberOfTrials; 
+
+    // set up parameters for graphs
+    const data = [trialDataClicksArray.clicks];
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
 
 
 
-
-
-// if (numberOfTrials > 25) {
-//     //disable images
-//     //display list of products with times viewed and votes received (don't display products not viewed)
-// }
-
-// document.querySelector('button').addEventListener('click', initializeNewTrial);
-
-// initializeNewTrial(); 
+const ctx = document.getElementById('chart').getContext('2d');
 
 
 

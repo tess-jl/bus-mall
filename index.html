@@ -11,8 +11,9 @@
 <body>
     <div class="container">
         <h1>Focus Group Testing for Bus Mall Publication</h1>
-        <h3>Select the product you would most likely spend money on by clicking on the image... </h2>
-        <section class="product-section">
+
+        <section class="trial-section">
+            <h3>Select the product you would most likely spend money on by clicking on the image... </h3>
 
             <label class="item one"><input type="radio" name="item" value=""><img class="item-image" src="" alt=""><p class="item-description"></p></label>
 
@@ -20,11 +21,19 @@
 
             <label class="item three"><input type="radio" name="item" value=""><img class="item-image" src="" alt=""><p class="item-description"></p></label>
 
-            <p id="next-container" class="hidden">
+            <h3>... then click the button below for the next trial</h3>
+            <p id="next-container">
                 <button id="next-button">Next</button>
             </p>
         </section>
+
+        </section id="results-section" class="hidden">
+            <h2>Results</h2>
+            <p>Here is the data after <span id="trial-count"></span> trials</p>
+            <canvas id="chart"></canvas>
+        <section>
     </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <script type="module" src="./src/app.js"></script>
 </body>
 </html>
