@@ -178,6 +178,7 @@ function displayFinalResults() {
     trialCount.textContent = numberOfTrials; 
 
     createShownListItem(trialDataTimesShownArray); 
+    createClicksListItem(trialDataClicksArray);
 
 
     // set up parameters for graphs
@@ -192,10 +193,20 @@ function createShownListItem(trialDataTimesShownArray) {
     trialDataTimesShownArray.forEach(item => {
 
         const shownListItem = document.createElement('li');
-        shownListItem.textContent = `you were shown ${item.id}, and you clicked it ${item.timesShown} times`;
+        shownListItem.textContent = `you were shown ${item.id} ${item.timesShown} time(s)`;
         shownList.appendChild(shownListItem);
-
     });
+}
 
+function createClicksListItem(trialDataClicksArray) {
+    //document.get get ul 
+    const shownList = document.getElementById('clicks-list');
+    //for each thing the array loop through 
+    trialDataClicksArray.forEach(item => {
+
+        const shownListItem = document.createElement('li');
+        shownListItem.textContent = `you were shown ${item.id}, and you clicked it ${item.clicks} time(s)`;
+        shownList.appendChild(shownListItem);
+    });
 }
 
