@@ -8,21 +8,22 @@ const itemDisplays = document.querySelectorAll('.item');
 const nextContainer = document.getElementById('next-container');
 const nextButton = document.getElementById('next-button');
 const trialSection = document.getElementById('trial-section');
-const resultsSection = document.getElementById('results-section');
+const resultsSection = document.getElementById('results');
 const trialCount = document.getElementById('trial-count');
+const itemData = document.getElementById('item-data');
 
 const masterItemsArray = new ItemArray(productData); // storing an array object in items 
 // console.log(items.getItems()); to access the array
 // console.log(items, 'first item in array'); shows me that items is an array object with the key/value pair items:Array(18)
 
-let recentlyShownItems = null; 
+// let recentlyShownItems = null; 
 
 let live = true; 
 let numberOfTrials = 0;
 
 let trialDataClicksArray = []; 
 let trialDataTimesShownArray = [];
-let itemsJustShown = [];
+// let itemsJustShown = [];
 
 displayTrialItems(); 
 
@@ -155,7 +156,7 @@ nodeListOfRadioTags.forEach((radioInput) => {
 nextButton.addEventListener('click', () =>{
     console.log('in next event handler');
 
-    if (numberOfTrials === 25) {
+    if (numberOfTrials === 3) {
         displayFinalResults();
         return; 
     }
@@ -174,7 +175,14 @@ function displayFinalResults() {
     //tell user the numbe of trials
     trialCount.textContent = numberOfTrials; 
 
-    console.log('in display final results');
+    console.log(trialDataTimesShownArray, 'times shown array');
+    let itemShown = [];
+
+    trialDataTimesShownArray.forEach(object => {
+        itemShown.push(object.id);
+        console.log(itemShown, 'item shown');
+        itemData.textContent = itemShown; // only showing the last thing that was shown 
+    });
 
     // set up parameters for graphs
     // const data = [trialDataClicksArray.clicks];

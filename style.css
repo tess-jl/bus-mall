@@ -11,9 +11,6 @@ canvas {
     height: 500px;
 }
 
-.hidden {
-    display: none;
-}
 
 [type=radio] {
     display: none;
@@ -24,3 +21,9 @@ canvas {
     border-radius: 0%;
     height: 100px;
 }
+
+
+.hidden {
+    display: none;
+}
+
