@@ -23,7 +23,6 @@ export class ItemArray {
         return this.items[randomItemIndex];
     }
 
-
     removeById(itemId) {
         const list = this.list; 
 

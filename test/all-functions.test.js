@@ -25,8 +25,8 @@ test('gets the entire item object from the array by its id', function(assert) {
     const items = new ItemArray(productData);
     const bananaObject = {
         id: 'banana',
-        image: '../assets/banana.jpg',
         name: 'Banana Slicer',
+        image: '../assets/banana.jpg'
     };
    //Act
    // Call the function you're testing and set the result to a const

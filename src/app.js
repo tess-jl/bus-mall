@@ -1,85 +1,147 @@
 import { productData } from './api.js';
 import { ItemArray } from './item-array.js';
+import { findById } from './utils.js';
 
 const nodeListOfImageTags = document.querySelectorAll('img');
 const nodeListOfRadioTags = document.querySelectorAll('input');
+const itemDisplays = document.querySelectorAll('.item');
 
-const items = new ItemArray(productData); // storing an array object in items 
+const masterItemsArray = new ItemArray(productData); // storing an array object in items 
 // console.log(items.getItems()); to access the array
 // console.log(items, 'first item in array'); shows me that items is an array object with the key/value pair items:Array(18)
 
-// let itemShown;
+let recentlyShownItems = null; 
+
 
 let numberOfTrials = 0;
-let numberOfClicks = 0; 
- 
+
+let trialDataClicksArray = []; 
+let trialDataTimesShownArray = [];
+
+displayTrialItems(); 
+
+function displayTrialItems() {
+    // gets the source data of the items 
+    let itemsAllowedToDisplay = masterItemsArray;
+
+    //don't re-run the three items most-recently shown 
+    // if (recentlyShownItems && masterItemsArray.items.length > 17); // 
+    //     itemsAllowedToDisplay.remove(recentlyShownItems.id);
 
 
-//need to iterate over radio tags and add the same event listener to each
-nodeListOfRadioTags.forEach((radioTag) => {
-    // let itemShown; // initialize object itemShown
-    console.log(radioTag);
+    //gets some random items to display
+    const itemToDisplay1 = itemsAllowedToDisplay.getRandomItem();
+    let itemToDisplay2 = itemsAllowedToDisplay.getRandomItem();
+    let itemToDisplay3 = itemsAllowedToDisplay.getRandomItem();
 
-    radioTag.addEventListener('click', (event) => {
-        console.log(radioTag, 'in event listener');
-        
-        if (event.target.value === radioTag.id) {
-            items.increaseClicksInObject(radioTag); // returns an object with the number of clicks increased by 1
-            console.log(radioTag);
-        }
-    });
-});
-
-
-const initializeNewTrial = () => {
-    numberOfTrials++; 
-
-    //get the three random item objects from the items array
-    const randomItem1 = items.getRandomItem();
-    let randomItem2 = items.getRandomItem();
-    let randomItem3 = items.getRandomItem();
-
-    while (randomItem1.id === randomItem2.id) {
-        randomItem2 = items.getRandomItem();
+    //checks that random items are different from one another
+    while (itemToDisplay1.id === itemToDisplay2.id) {
+        itemToDisplay2 = itemsAllowedToDisplay.getRandomItem();
     }
-    while (randomItem1.id === randomItem3.id || randomItem2.id === randomItem3.id) {
-        randomItem3 = items.getRandomItem();
+    while (itemToDisplay1.id === itemToDisplay3.id || itemToDisplay2.id === itemToDisplay3.id) {
+        itemToDisplay3 = itemsAllowedToDisplay.getRandomItem();
     }
+
+    // store the data for timesShown for these three different items in trialDataTimesShownArray
+    trackNumberOfTimesShown(itemToDisplay1.id);
+    trackNumberOfTimesShown(itemToDisplay2.id);
+    trackNumberOfTimesShown(itemToDisplay3.id);
 
     //show three random item images
     nodeListOfImageTags.forEach((imageTag, index) => { 
         if (index === 0) {
-            imageTag.src = randomItem1.image;
+            imageTag.src = itemToDisplay1.image;
         } else if (index === 1) {
-            imageTag.src = randomItem2.image; 
+            imageTag.src = itemToDisplay2.image; 
         } else if (index === 2) {
-            imageTag.src = randomItem3.image; 
+            imageTag.src = itemToDisplay3.image; 
         }
     });
     // render each random item at the three radio elements 
     nodeListOfRadioTags.forEach((radioTag, index) => {
         if (index === 0) {
-            radioTag.value = randomItem1.id;
-            // items.increaseTimesShownInObject(randomItem1); // returns object with updated timesShown property 
+            radioTag.value = itemToDisplay1.id;
         } else if (index === 1) {
-            radioTag.value = randomItem2.id;
-            // items.increaseTimesShownInObject(randomItem2);
+            radioTag.value = itemToDisplay2.id;
         } else if (index === 2) {
-            radioTag.value = randomItem3.id;
-            // items.increaseTimesShownInObject(randomItem3);
+            radioTag.value = itemToDisplay3.id;
         }
     });  
 
-}; 
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function trackNumberOfClicks(itemId) {
+    const found = findById(trialDataClicksArray, itemId);
+    if (found) {
+        found.clicks++;
+        return; // breaks out of jail b/c it's iterated now
+    }
+    // if not already in array then create a new object and push it 
+    const newTrialDataObject = { id: itemId, clicks: 1 };
+    trialDataClicksArray.push(newTrialDataObject);
+}
+
+function trackNumberOfTimesShown(itemId) {
+    const shownBefore = findById(trialDataTimesShownArray, itemId);
+    if (shownBefore) {
+        shownBefore.timesShown++;
+        return; // breaks out of jail b/c it's iterated now
+    }
+    // if not already in array then create a new object and push it 
+    const newTrialDataObject = { id: itemId, timesShown: 1 };
+    trialDataTimesShownArray.push(newTrialDataObject);
+}
+
+//GOAL: update number of trials and number of clicks 
+// function trackTrialDataForArray(itemId) {   
+//     trackNumberOfTimesShown();
+//     trackNumberOfClicks();
+// }
+
+//need to iterate over radio tags and add the same event listener to each
+// nodeListOfRadioTags.forEach((radioTag) => {
+
+//     numberOfTrials = 1;
+//     // let itemShown; // initialize object itemShown
+//     console.log(radioTag, 'radio tag');
+
+//     radioTag.addEventListener('click', (event) => {
+//         console.log(radioTag, 'in event listener');
+        
+//         if (event.target.value === radioTag.id) {
+//             numberOfClicks++;
+//             trialDataArray.push()
+//             console.log(numberOfClicks);
+//         }
+//     });
+// });
+
+
+
+
 
 // if (numberOfTrials > 25) {
 //     //disable images
 //     //display list of products with times viewed and votes received (don't display products not viewed)
 // }
 
-document.querySelector('button').addEventListener('click', initializeNewTrial);
+// document.querySelector('button').addEventListener('click', initializeNewTrial);
 
-initializeNewTrial(); 
+// initializeNewTrial(); 
 
 
 
