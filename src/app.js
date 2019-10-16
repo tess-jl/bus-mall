@@ -134,7 +134,7 @@ const handleUserChoice = (event) => {
     live = false; 
 };
 
-function trackNumberOfClicks(itemId) {
+function trackNumberOfClicks(itemId) { // as Array
     const found = findById(trialDataClicksArray, itemId);
     if (found) {
         found.clicks++;
@@ -143,8 +143,10 @@ function trackNumberOfClicks(itemId) {
     // if not already in array then create a new object and push it 
     const newTrialDataObject = { id: itemId, clicks: 1 };
     trialDataClicksArray.push(newTrialDataObject);
-    // console.log(trialDataClicksArray, 'trial data clicks array in track number of clicks');
+    console.log(trialDataClicksArray, 'trial data clicks array in track number of clicks');
 }
+
+
 
 
 //need to iterate over radio inputs and add the same event listener to each
@@ -156,7 +158,7 @@ nodeListOfRadioTags.forEach((radioInput) => {
 nextButton.addEventListener('click', () =>{
     console.log('in next event handler');
 
-    if (numberOfTrials === 25) {
+    if (numberOfTrials === 3) {
         displayFinalResults();
         return; 
     }
@@ -175,23 +177,25 @@ function displayFinalResults() {
     //tell user the numbe of trials
     trialCount.textContent = numberOfTrials; 
 
+    createShownListItem(trialDataTimesShownArray); 
 
-    let itemsShown = [];
-    
-
-    trialDataTimesShownArray.forEach(object => {
-        itemsShown.push(object.id);
-        console.log(itemsShown, 'item shown');
-    });
-    const result = itemsShown.toString();
-    const stringResult = result.split(',');
-    itemData.textContent = stringResult; // only showing the last thing that was shown 
-    console.log(itemsShown, 'item shown after');
 
     // set up parameters for graphs
     // const data = [trialDataClicksArray.clicks];
 
 }
 
+function createShownListItem(trialDataTimesShownArray) {
+    //document.get get ul 
+    const shownList = document.getElementById('shown-list');
+    //for each thing the array loop through 
+    trialDataTimesShownArray.forEach(item => {
 
+        const shownListItem = document.createElement('li');
+        shownListItem.textContent = `you were shown ${item.id}, and you clicked it ${item.timesShown} times`;
+        shownList.appendChild(shownListItem);
+
+    });
+
+}
 
