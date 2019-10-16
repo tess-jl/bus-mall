@@ -22,6 +22,7 @@ let numberOfTrials = 0;
 
 let trialDataClicksArray = []; 
 let trialDataTimesShownArray = [];
+let itemsJustShown = [];
 
 displayTrialItems(); 
 
@@ -29,9 +30,24 @@ function displayTrialItems() {
     // gets the source data of the items 
     let itemsAllowedToDisplay = masterItemsArray;
 
-    //don't re-run the three items most-recently shown 
-    // if (recentlyShownItems && masterItemsArray.items.length > 17); // 
-    //     itemsAllowedToDisplay.remove(recentlyShownItems.id);
+    numberOfTrials++;
+    console.log(numberOfTrials, 'num of trials'); 
+
+    // if (numberOfTrials > 1) { // don't change the itemsAllowedTDisplay for first trial only 
+    //     //change the itemsAllowedToDisplay array to exclude the three items previously displayed 
+
+    //     //get items previously displayed
+    //     console.log(itemsJustShown, 'items previously displayed to be used for getting the random items'); 
+    //     const previousItem1 = itemsJustShown[0];
+    //     const previousItem2 = itemsJustShown[1];
+    //     const previousItem3 = itemsJustShown[2];
+    //     debugger;
+
+    //     itemsAllowedToDisplay.forEach(item => {
+    //         removeById()
+    //     });
+    // }
+
 
 
     //gets some random items to display
@@ -51,6 +67,11 @@ function displayTrialItems() {
     trackNumberOfTimesShown(itemToDisplay1.id);
     trackNumberOfTimesShown(itemToDisplay2.id);
     trackNumberOfTimesShown(itemToDisplay3.id);
+
+    // populateItemsJustShown(itemToDisplay1.id);
+    // populateItemsJustShown(itemToDisplay2.id);
+    // populateItemsJustShown(itemToDisplay3.id);
+    // console.log(itemsJustShown, 'items just shown to track for next trial');
     // console.log(trialDataTimesShownArray, 'times shown array'); // working
 
     //show three random item images
@@ -73,12 +94,24 @@ function displayTrialItems() {
             radioTag.value = itemToDisplay3.id;
         }
     });  
+
+    // itemsJustShown.splice(0, 3);
+    // console.log(itemsJustShown, 'array should be empty now');
+
+//     console.log(trialDataTimesShownArray, 'times shown array at end of display trial items');
 }
-console.log(trialDataTimesShownArray, 'times shown array');
+
+function populateItemsJustShown(itemId) {
+    //POPULATE itemsJustShownArray?
+    const nextTrialsPreviouslyShownItem = { id: itemId };
+    itemsJustShown.push(nextTrialsPreviouslyShownItem);
+}
+
 
 function trackNumberOfTimesShown(itemId) {
     const shownBefore = findById(trialDataTimesShownArray, itemId);
     if (shownBefore) {
+        //update number of times shown for the trialDataTimesShownArray
         shownBefore.timesShown++;
         return; // breaks out of jail b/c it's iterated now
     }
@@ -88,15 +121,12 @@ function trackNumberOfTimesShown(itemId) {
 }
 
 const handleUserChoice = (event) => {
-    console.log('in handle user choice fcn');
-    if (!live) return;
+    if (!live) return; // makes sure user only votes 1x/trial 
 
-    numberOfTrials++;
-
-    const radioElement = event.target.value;
+    const radioElement = event.target.value; //will be the string id of whatever was clicked
 
     //track number of clicks if the event listener on the radio tag has an event (i.e. user clicks)
-    trackNumberOfClicks(radioElement.id);
+    trackNumberOfClicks(radioElement);
 
     //show next button
     nextContainer.classList.remove('hidden');
@@ -112,6 +142,7 @@ function trackNumberOfClicks(itemId) {
     // if not already in array then create a new object and push it 
     const newTrialDataObject = { id: itemId, clicks: 1 };
     trialDataClicksArray.push(newTrialDataObject);
+    // console.log(trialDataClicksArray, 'trial data clicks array in track number of clicks');
 }
 
 
@@ -123,6 +154,7 @@ nodeListOfRadioTags.forEach((radioInput) => {
 
 nextButton.addEventListener('click', () =>{
     console.log('in next event handler');
+
     if (numberOfTrials === 25) {
         displayFinalResults();
         return; 
@@ -131,7 +163,7 @@ nextButton.addEventListener('click', () =>{
     displayTrialItems();
 });
 
-console.log(trialDataClicksArray, 'trial data clicks array');
+
 
 
 function displayFinalResults() {
@@ -142,50 +174,11 @@ function displayFinalResults() {
     //tell user the numbe of trials
     trialCount.textContent = numberOfTrials; 
 
+    console.log('in display final results');
+
     // set up parameters for graphs
-    const data = [trialDataClicksArray.clicks];
+    // const data = [trialDataClicksArray.clicks];
 
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: data,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
 }
-
-
-
-const ctx = document.getElementById('chart').getContext('2d');
-
 
 

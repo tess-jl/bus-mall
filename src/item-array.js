@@ -24,12 +24,9 @@ export class ItemArray {
     }
 
     removeById(itemId) {
-        const list = this.list; 
-
-        list.forEach((item, i) => {
+        this.items.forEach((item, i) => {
             if (item.id === itemId) {
-                list.splice(1, i);
-                return;
+                this.items.splice(i, 1);
             }
         });
     }
