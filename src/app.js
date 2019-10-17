@@ -109,8 +109,7 @@ nodeListOfRadioTags.forEach((radioInput) => {
 
 
 nextButton.addEventListener('click', () =>{
-
-    if (numberOfTrials === 2) {
+    if (numberOfTrials === 25) {
         displayFinalResults();
         return; 
     }
@@ -166,7 +165,6 @@ function prepareIdsArray(templateArray, idOnlyArray) {
         const idData = object.id; 
         idOnlyArray.push(idData);
     });
-    console.log(idOnlyArray, 'id shown only array');
     return idOnlyArray; 
 }
 
@@ -175,7 +173,6 @@ function prepareTimesShownArray(trialDataTimesShownArray, timesShownOnlyArray) {
         const timesShownData = object.timesShown; 
         timesShownOnlyArray.push(timesShownData);
     });
-    console.log(timesShownOnlyArray, 'times shown only array');
     return timesShownOnlyArray; 
 }
 
@@ -184,7 +181,6 @@ function prepareClicksArray(trialDataClicksArray, clicksShownOnlyArray) {
         const clicksData = object.clicks; 
         clicksShownOnlyArray.push(clicksData);
     });
-    console.log(clicksShownOnlyArray, 'clicks shown only array');
     return clicksShownOnlyArray; 
 }
 
