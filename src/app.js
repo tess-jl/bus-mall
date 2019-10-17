@@ -125,15 +125,41 @@ function displayFinalResults() {
 
     trialCount.textContent = numberOfTrials; 
 
-    prepareIdsArray(trialDataTimesShownArray, idOnlyArray);
-    prepareTimesShownArray(trialDataTimesShownArray, timesShownOnlyArray); 
+    const timesShownIdLabels = prepareIdsArray(trialDataTimesShownArray, idOnlyArray);
+    const timesShownChartData = prepareTimesShownArray(trialDataTimesShownArray, timesShownOnlyArray); 
 
-    prepareIdsArray(trialDataClicksArray, idOnlyArray);
-    prepareClicksArray(trialDataClicksArray, clicksShownOnlyArray);
+    const clicksIdLabels = prepareIdsArray(trialDataClicksArray, idOnlyArray);
+    const clicksChartData = prepareClicksArray(trialDataClicksArray, clicksShownOnlyArray);
 
+    renderChart(timesShownIdLabels, timesShownChartData, ctx1);
+    renderChart(clicksIdLabels, clicksChartData, ctx2);
 }
 
+function renderChart(labels, data, ctx) {
+    const labelColors = ['red', 'blue', 'yellow', 'green', 'purple', 'orange'];
 
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '# of times clicked',
+                data: data,
+                backgroundColor: labelColors
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    return myChart;
+}
 
 function prepareIdsArray(templateArray, idOnlyArray) {
     templateArray.forEach(object => {
@@ -162,4 +188,5 @@ function prepareClicksArray(trialDataClicksArray, clicksShownOnlyArray) {
     return clicksShownOnlyArray; 
 }
 
-
+const ctx1 = document.getElementById('chart1').getContext('2d');
+const ctx2 = document.getElementById('chart2').getContext('2d');
