@@ -18,13 +18,17 @@ let numberOfTrials = 0;
 let trialDataClicksArray = []; 
 let trialDataTimesShownArray = [];
 
+let timesShownOnlyArray = [];
+let clicksShownOnlyArray = []; 
+let idOnlyArray = []; 
+
+
 displayTrialItems(); 
 
 function displayTrialItems() {
     let itemsAllowedToDisplay = masterItemsArray;
 
     numberOfTrials++;
-
 
     const itemToDisplay1 = itemsAllowedToDisplay.getRandomItem();
     let itemToDisplay2 = itemsAllowedToDisplay.getRandomItem();
@@ -78,7 +82,6 @@ const handleUserChoice = (event) => {
 
     const radioElement = event.target.value; 
 
-
     trackNumberOfClicks(radioElement);
 
     nextContainer.classList.remove('hidden');
@@ -94,11 +97,10 @@ function trackNumberOfClicks(itemId) {
 
     const newTrialDataObject = { id: itemId, clicks: 1 };
     trialDataClicksArray.push(newTrialDataObject);
-    console.log(trialDataClicksArray, 'trial data clicks array in track number of clicks');
 }
 
 
-
+// console.log(trialDataClicksArray, 'trial data clicks array in track number of clicks');
 
 
 nodeListOfRadioTags.forEach((radioInput) => {
@@ -107,9 +109,8 @@ nodeListOfRadioTags.forEach((radioInput) => {
 
 
 nextButton.addEventListener('click', () =>{
-    console.log('in next event handler');
 
-    if (numberOfTrials === 25) {
+    if (numberOfTrials === 2) {
         displayFinalResults();
         return; 
     }
@@ -118,35 +119,47 @@ nextButton.addEventListener('click', () =>{
 });
 
 
-
-
 function displayFinalResults() {
     trialSection.classList.add('hidden');
     resultsSection.classList.remove('hidden');
 
     trialCount.textContent = numberOfTrials; 
 
-    createShownListItem(trialDataTimesShownArray); 
-    createClicksListItem(trialDataClicksArray);
+    prepareIdsArray(trialDataTimesShownArray, idOnlyArray);
+    prepareTimesShownArray(trialDataTimesShownArray, timesShownOnlyArray); 
+
+    prepareIdsArray(trialDataClicksArray, idOnlyArray);
+    prepareClicksArray(trialDataClicksArray, clicksShownOnlyArray);
 
 }
 
-function createShownListItem(trialDataTimesShownArray) { 
-    const shownList = document.getElementById('shown-list');
-    trialDataTimesShownArray.forEach(item => {
 
-        const shownListItem = document.createElement('li');
-        shownListItem.textContent = `you were shown ${item.id} ${item.timesShown} time(s)`;
-        shownList.appendChild(shownListItem);
+
+function prepareIdsArray(templateArray, idOnlyArray) {
+    templateArray.forEach(object => {
+        const idData = object.id; 
+        idOnlyArray.push(idData);
     });
+    console.log(idOnlyArray, 'id shown only array');
+    return idOnlyArray; 
 }
 
-function createClicksListItem(trialDataClicksArray) {
-    const shownList = document.getElementById('clicks-list'); 
-    trialDataClicksArray.forEach(item => {
-        const shownListItem = document.createElement('li');
-        shownListItem.textContent = `you were shown ${item.id}, and you clicked it ${item.clicks} time(s)`;
-        shownList.appendChild(shownListItem);
+function prepareTimesShownArray(trialDataTimesShownArray, timesShownOnlyArray) {
+    trialDataTimesShownArray.forEach(object => {
+        const timesShownData = object.timesShown; 
+        timesShownOnlyArray.push(timesShownData);
     });
+    console.log(timesShownOnlyArray, 'times shown only array');
+    return timesShownOnlyArray; 
 }
+
+function prepareClicksArray(trialDataClicksArray, clicksShownOnlyArray) {
+    trialDataClicksArray.forEach(object => {
+        const clicksData = object.clicks; 
+        clicksShownOnlyArray.push(clicksData);
+    });
+    console.log(clicksShownOnlyArray, 'clicks shown only array');
+    return clicksShownOnlyArray; 
+}
+
 
