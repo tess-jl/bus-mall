@@ -121,18 +121,18 @@ function displayFinalResults() {
     const clicksIdLabels = prepareIdsArray(trialDataClicksArray, idOnlyArray);
     const clicksChartData = prepareClicksArray(trialDataClicksArray, clicksShownOnlyArray);
 
-    renderChart(timesShownIdLabels, timesShownChartData, ctx1);
-    renderChart(clicksIdLabels, clicksChartData, ctx2);
+    renderChart(timesShownIdLabels, timesShownChartData, ctx1, 'number of times shown');
+    renderChart(clicksIdLabels, clicksChartData, ctx2, 'number of times clicked');
 }
 
-function renderChart(labels, data, ctx) {
-    const labelColors = ['red', 'blue', 'yellow', 'green', 'purple', 'orange'];
+function renderChart(labels, data, ctx, string) {
+    const labelColors = ['red', 'blue', 'yellow', 'green', 'purple', 'orange', 'magenta', 'lightblue', 'red', 'blue', 'yellow', 'green', 'purple', 'orange', 'magenta', 'lightblue', 'red', 'blue', 'yellow', 'green', 'purple', 'orange', 'magenta', 'lightblue', 'red', 'orange'];
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
-                label: '# of times clicked',
+                label: string,
                 data: data,
                 backgroundColor: labelColors
             }]
