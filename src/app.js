@@ -79,11 +79,8 @@ function trackNumberOfTimesShown(itemId) {
 
 const handleUserChoice = (event) => {
     if (!live) return; 
-
     const radioElement = event.target.value; 
-
     trackNumberOfClicks(radioElement);
-
     nextContainer.classList.remove('hidden');
     live = false; 
 };
@@ -99,14 +96,9 @@ function trackNumberOfClicks(itemId) {
     trialDataClicksArray.push(newTrialDataObject);
 }
 
-
-// console.log(trialDataClicksArray, 'trial data clicks array in track number of clicks');
-
-
 nodeListOfRadioTags.forEach((radioInput) => {
     radioInput.addEventListener('click', handleUserChoice); 
 });
-
 
 nextButton.addEventListener('click', () =>{
     if (numberOfTrials === 25) {
@@ -116,7 +108,6 @@ nextButton.addEventListener('click', () =>{
     live = true; 
     displayTrialItems();
 });
-
 
 function displayFinalResults() {
     trialSection.classList.add('hidden');
@@ -136,7 +127,6 @@ function displayFinalResults() {
 
 function renderChart(labels, data, ctx) {
     const labelColors = ['red', 'blue', 'yellow', 'green', 'purple', 'orange'];
-
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
