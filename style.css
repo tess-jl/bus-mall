@@ -1,0 +1,29 @@
+body {
+    display: flex; 
+    justify-content: center;
+    text-align: center;
+    color: rgb(28, 50, 71);
+    background-color: aliceblue; 
+}
+
+canvas {
+    width: 75%;
+    height: 500px;
+}
+
+
+[type=radio] {
+    display: none;
+}
+
+.item-image {
+    border: 5px solid transparent;
+    border-radius: 0%;
+    height: 100px;
+}
+
+
+.hidden {
+    display: none;
+}
+
