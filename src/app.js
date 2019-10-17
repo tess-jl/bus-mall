@@ -109,7 +109,7 @@ nodeListOfRadioTags.forEach((radioInput) => {
 nextButton.addEventListener('click', () =>{
     console.log('in next event handler');
 
-    if (numberOfTrials === 3) {
+    if (numberOfTrials === 25) {
         displayFinalResults();
         return; 
     }
