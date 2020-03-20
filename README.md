@@ -3,6 +3,7 @@
 ### Vanilla JavaScript, static HTML, CSS
 
 #### Re-imagining the Skymall magazine from airplanes, this app is the bus counterpart. Local storage is used to persist data. 
+___
 
 #### Assignment: Backstory
 "You've been hired by a startup called BusMall, whose product is similar to the SkyMall catalog found in the seat back pockets on airplanes: a catalog of assorted high-markup products provided to a captive audience seeking a mental escape from the drudgery of travel.
