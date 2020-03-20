@@ -18,13 +18,17 @@ let numberOfTrials = 0;
 let trialDataClicksArray = []; 
 let trialDataTimesShownArray = [];
 
+let timesShownOnlyArray = [];
+let clicksShownOnlyArray = []; 
+let idOnlyArray = []; 
+
+
 displayTrialItems(); 
 
 function displayTrialItems() {
     let itemsAllowedToDisplay = masterItemsArray;
 
     numberOfTrials++;
-
 
     const itemToDisplay1 = itemsAllowedToDisplay.getRandomItem();
     let itemToDisplay2 = itemsAllowedToDisplay.getRandomItem();
@@ -75,12 +79,8 @@ function trackNumberOfTimesShown(itemId) {
 
 const handleUserChoice = (event) => {
     if (!live) return; 
-
     const radioElement = event.target.value; 
-
-
     trackNumberOfClicks(radioElement);
-
     nextContainer.classList.remove('hidden');
     live = false; 
 };
@@ -94,21 +94,13 @@ function trackNumberOfClicks(itemId) {
 
     const newTrialDataObject = { id: itemId, clicks: 1 };
     trialDataClicksArray.push(newTrialDataObject);
-    console.log(trialDataClicksArray, 'trial data clicks array in track number of clicks');
 }
-
-
-
-
 
 nodeListOfRadioTags.forEach((radioInput) => {
     radioInput.addEventListener('click', handleUserChoice); 
 });
 
-
 nextButton.addEventListener('click', () =>{
-    console.log('in next event handler');
-
     if (numberOfTrials === 25) {
         displayFinalResults();
         return; 
@@ -117,36 +109,70 @@ nextButton.addEventListener('click', () =>{
     displayTrialItems();
 });
 
-
-
-
 function displayFinalResults() {
     trialSection.classList.add('hidden');
     resultsSection.classList.remove('hidden');
 
     trialCount.textContent = numberOfTrials; 
 
-    createShownListItem(trialDataTimesShownArray); 
-    createClicksListItem(trialDataClicksArray);
+    const timesShownIdLabels = prepareIdsArray(trialDataTimesShownArray, idOnlyArray);
+    const timesShownChartData = prepareTimesShownArray(trialDataTimesShownArray, timesShownOnlyArray); 
 
+    const clicksIdLabels = prepareIdsArray(trialDataClicksArray, idOnlyArray);
+    const clicksChartData = prepareClicksArray(trialDataClicksArray, clicksShownOnlyArray);
+
+    renderChart(timesShownIdLabels, timesShownChartData, ctx1, 'number of times shown');
+    renderChart(clicksIdLabels, clicksChartData, ctx2, 'number of times clicked');
 }
 
-function createShownListItem(trialDataTimesShownArray) { 
-    const shownList = document.getElementById('shown-list');
-    trialDataTimesShownArray.forEach(item => {
-
-        const shownListItem = document.createElement('li');
-        shownListItem.textContent = `you were shown ${item.id} ${item.timesShown} time(s)`;
-        shownList.appendChild(shownListItem);
+function renderChart(labels, data, ctx, string) {
+    const labelColors = ['red', 'blue', 'yellow', 'green', 'purple', 'orange', 'magenta', 'lightblue', 'red', 'blue', 'yellow', 'green', 'purple', 'orange', 'magenta', 'lightblue', 'red', 'blue', 'yellow', 'green', 'purple', 'orange', 'magenta', 'lightblue', 'red', 'orange'];
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: string,
+                data: data,
+                backgroundColor: labelColors
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
     });
+    return myChart;
 }
 
-function createClicksListItem(trialDataClicksArray) {
-    const shownList = document.getElementById('clicks-list'); 
-    trialDataClicksArray.forEach(item => {
-        const shownListItem = document.createElement('li');
-        shownListItem.textContent = `you were shown ${item.id}, and you clicked it ${item.clicks} time(s)`;
-        shownList.appendChild(shownListItem);
+function prepareIdsArray(templateArray, idOnlyArray) {
+    templateArray.forEach(object => {
+        const idData = object.id; 
+        idOnlyArray.push(idData);
     });
+    return idOnlyArray; 
 }
 
+function prepareTimesShownArray(trialDataTimesShownArray, timesShownOnlyArray) {
+    trialDataTimesShownArray.forEach(object => {
+        const timesShownData = object.timesShown; 
+        timesShownOnlyArray.push(timesShownData);
+    });
+    return timesShownOnlyArray; 
+}
+
+function prepareClicksArray(trialDataClicksArray, clicksShownOnlyArray) {
+    trialDataClicksArray.forEach(object => {
+        const clicksData = object.clicks; 
+        clicksShownOnlyArray.push(clicksData);
+    });
+    return clicksShownOnlyArray; 
+}
+
+const ctx1 = document.getElementById('chart1').getContext('2d');
+const ctx2 = document.getElementById('chart2').getContext('2d');
